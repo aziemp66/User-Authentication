@@ -30,6 +30,9 @@ app.use(
         resave: false,
         saveUninitialized: false,
         store: sessionStore,
+        cookie: {
+            maxAge: 5 * 60 * 1000, //Counted in miliseconds
+        },
     })
 );
 
