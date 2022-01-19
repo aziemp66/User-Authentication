@@ -155,7 +155,7 @@ router.post("/login", async function (req, res) {
 
 router.get("/admin", async function (req, res) {
     //if (!req.session.user)
-    if (!req.session.isAuthenticated) {
+    if (!res.locals.isAuth) {
         return res.status(401).render("401");
     }
 
@@ -164,8 +164,8 @@ router.get("/admin", async function (req, res) {
         .collection("users")
         .findOne({ _id: req.session.user.id });
 
-    if (!user || !user.isAdmin) {
-        res.status(403).render("403");
+    if (!res.locals.isAdmin) {
+        return res.status(403).render("403");
     }
 
     res.render("admin");
@@ -179,7 +179,7 @@ router.post("/logout", function (req, res) {
 
 router.get("/profile", function (req, res) {
     //if (!req.session.user)
-    if (!req.session.isAuthenticated) {
+    if (!res.locals.isAuth) {
         return res.status(401).render("401");
     }
     res.render("profile");
